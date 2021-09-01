@@ -87,6 +87,7 @@ export default function Employees(): JSX.Element {
       </div>
       <div className={styles.row}>
         <button
+          data-testid="button-add-employee"
           className={styles.addButton}
           onClick={() => {
             setIsAdding(true);

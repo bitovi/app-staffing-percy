@@ -14,14 +14,14 @@ export default function App(): JSX.Element {
     <Layout>
       <Suspense fallback={<Loading />}>
         <Switch>
-          <Route path="/" exact>
-            <Hello name="World" />
-          </Route>
           <Route path="/employees">
             <Employees />
           </Route>
           <Route path="/dylan">
             <Hello name="Dylan" />
+          </Route>
+          <Route path="/">
+            <Hello name="World" />
           </Route>
           <Route>
             <Hello name="Error" />

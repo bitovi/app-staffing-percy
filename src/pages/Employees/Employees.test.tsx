@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Browser, chromium, Page } from 'playwright';
+import { percySnapshot } from 'percy-playwright'
 
 import Employees from "./Employees";
 
@@ -33,4 +35,18 @@ describe("Pages/Employees", () => {
     // Make sure Tom is no longer visible
     expect(screen.queryByDisplayValue(/Tom/i)).not.toBeInTheDocument();
   });
+})
+
+describe('[snapshot]', () => {
+  it('Loads the homepage', async function () {
+    const browser = await chromium.launch();
+    const page = await browser.newPage()
+    await page.goto('http://localhost:3000/app-staffing/#/employees')
+    await percySnapshot(page, 'Employees - List', { widths: [768, 1200] })
+    await page.click('data-testid=button-add-employee')
+    await page.waitForSelector('data-testid=button-employee-save')
+    await percySnapshot(page, 'Employees - Add New', { widths: [768, 1200] })
+    browser.close()
+  })
 });
+
